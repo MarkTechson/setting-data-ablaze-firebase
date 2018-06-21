@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Demo-2</title>
+    <script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
+        crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" />
+    <style>
+        .chat {
+            height: 200px;
+            width: 100%;
+            overflow-y: scroll;
+            border: solid 1px black;
+            background: white;
+            margin-bottom: 10px;
+        }
+        .chat-message-primary {
+            color: purple;
+            font-weight: bold;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="jumbotron">
+                    <h1>Chat App🔥</h1>
+                    <hr />
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="chat"></div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-5">
+                            <input type="text" class="form-control user" placeholder="Username">
+                        </div>
+                        <div class="col-md-6">
+                            <input type="text" class="form-control message" placeholder="Enter a message">
+                        </div>
+                        <div class="col-md-1">
+                            <button class="btn btn-success">Send</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://www.gstatic.com/firebasejs/5.0.4/firebase.js"></script>
+    <script>
+        // Initialize Firebase
+        var config = {
+            apiKey: "AIzaSyDaCA5055AXtmsXLQLi1_Tplpp0zMg15e4",
+            authDomain: "marktechsondb.firebaseapp.com",
+            databaseURL: "https://marktechsondb.firebaseio.com",
+            projectId: "marktechsondb",
+            storageBucket: "marktechsondb.appspot.com",
+            messagingSenderId: "181469986114"
+        };
+        firebase.initializeApp(config);
+    </script>
+    <script>
+        $(document).ready(() => {
+            const database = firebase.database();
+            $(".message").on("keyup", function (e) {
+                if (e.keyCode === 13) {
+                    $(".user").attr("disabled", true);
+                    $(".chat").append(getMessageHTML());
+                    $(this).val("");
+                }
+            });
+
+            const getMessageHTML = () => {
+                return `<div><span class="chat-message-primary">${$(".user").val()}</span>: ${$(".message").val()}</div>`
+            }
+        });
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Demo-1</title>
+    <script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
+</head>
+<body>
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="jumbotron text-center">
+                    <h1>Click Counter🔥</h1>
+                    <hr>
+                    <button class="btn btn-info clicker">Click!</button>
+                    <div class="click-count">0</div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+<script src="https://www.gstatic.com/firebasejs/5.0.4/firebase.js"></script>
+<script>
+  // Initialize Firebase
+  var config = {
+    apiKey: "AIzaSyDaCA5055AXtmsXLQLi1_Tplpp0zMg15e4",
+    authDomain: "marktechsondb.firebaseapp.com",
+    databaseURL: "https://marktechsondb.firebaseio.com",
+    projectId: "marktechsondb",
+    storageBucket: "marktechsondb.appspot.com",
+    messagingSenderId: "181469986114"
+  };
+  firebase.initializeApp(config);
+</script>
+    <script>
+        $(document).ready(()=>{
+            const database = firebase.database();
+            let count = 0;
+            database.ref("clicks").on("value", (snap)=>{
+                count = snap.val().count;
+                $(".click-count").text(count);
+            });
+            // Set up a listener
+            $(".clicker").on("click", function () {
+                count++;
+                database.ref("clicks").set({count}).then(snap=>{
+                    $(".click-count").text(count);
+                });
+            });
+        });
+    </script>
+</body>
+</html>
