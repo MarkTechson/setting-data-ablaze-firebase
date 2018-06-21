@@ -37,6 +37,7 @@
 </script>
     <script>
         $(document).ready(()=>{
+            // firebase example
             const database = firebase.database();
             let count = 0;
             database.ref("clicks").on("value", (snap)=>{
